@@ -7,7 +7,7 @@ We accept online payments from various methods, such as:
 * [Demo App](#4-demo)
 
 ## IPay88 SDK for Android
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/kh.com.ipay88.sdk/ipay88-android-sdk/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/kh.com.ipay88.sdk/ipay88-android-sdk)
+[![Maven Central](https://img.shields.io/maven-central/v/kh.com.ipay88.sdk/ipay88-android-sdk)](https://img.shields.io/maven-central/v/kh.com.ipay88.sdk/ipay88-android-sdk)
 
 ### SDK Payment Flow
 1. Your application initializes the library.

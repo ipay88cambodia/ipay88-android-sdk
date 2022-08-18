@@ -4,7 +4,7 @@ We accept online payments from various methods, such as:
 * e-Wallets (KHQR, Wing, PiPay, eMoney, Alipay, WeChat Pay, etc.)
 * Online Banking (ACLEDA XPay, CAMPU Direct Debit, Chip Mong Pay, AMK Online Card, Prince Bank QR, etc.)
 * [Appendix I (1. PaymentId)](#1-paymentid)
-* [Demo App](#4-demo)
+* Download Demo App from [here](/app)
 
 ## IPay88 SDK for Android
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/kh.com.ipay88.sdk/ipay88-android-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/kh.com.ipay88.sdk/ipay88-android-sdk)
@@ -17,8 +17,8 @@ We accept online payments from various methods, such as:
 
 ## Table of Contents
 ### 1. Requirements
-1. Please share your App Information to IPay88 team:
-- AppId inside module build.gradle
+1. Please share your App Information to IPay88 team or submit this form [Mobile App Information](https://forms.gle/HZNb8JokStT3HFRe7):
+- AppId/Package Name (E.g: `kh.com.ipay88.sdk.demo`) inside module `build.gradle` or `AndroidManifest.xml`
 ```gradle
 android {
     defaultConfig {
@@ -33,7 +33,7 @@ android {
     + Merchant Code (KHxxxxxx)
     + Merchant Key  (XXxxxxxx)
     + ClientAppSecret (IPAY88-xxxxxxxxxxxxxxxxxxxxxxxxx). Please refer to [2.2 ClientAppSecret inside AndroidManifest.xml](#22-clientappsecret-inside-androidmanifestxml)
-
+    + WeChat Pay AppId (wxxxxxxxxxxxxxxxxx) (Optional). Please refer to [1. WeChat In-App Payment Configuration](#1-wechat-in-app-payment-configuration)
 
 ### 2. Setup
 #### 2.1 Dependencies
@@ -53,11 +53,11 @@ dependencyResolutionManagement {
 + Add it in your module build.gradle inside dependencies:
 ```gradle
 dependencies {
-    implementation 'kh.com.ipay88.sdk:ipay88-android-sdk:1.0.0-SNAPSHOT'
+    implementation 'kh.com.ipay88.sdk:ipay88-android-sdk:1.0.1-SNAPSHOT'
 }
 ```
 
-#### 2.2 ClientAppSecret inside AndroidManifest.xml
+#### 2.2 ClientAppSecret inside `AndroidManifest.xml`
 ```xml
 <manifest>
     <application>
@@ -388,5 +388,52 @@ Overlimit per transaction   |   You exceed the amount value per transaction.
 Payment not allowed         |   The Payment method you requested is not allowed for this merchant code, please contact iPay88 Support to verify what payment method available for the merchant account.
 Permission not allow        |   Your AppId or the shared credentials is not match with the information registered in iPay88 merchant account. Please contact IPay88 team.
 
-#### 4. Demo
-[IPAY88SDK-Demo.apk](/app/IPAY88SDK-Demo.apk)
+
+### SDK Version Updates
+#### Version >= 1.0.1
+##### 1. WeChat In-App Payment Configuration
+- Step1. Create a class named `WXPayEntryActivity` which extends `android.app.Activity` and place it under a package named `wxapi`, then put it under your App's package name (E.g: `kh.com.ipay88.sdk.demo.wxapi`).
+
+- Step2. Add below source codes to your class named `WXPayEntryActivity`
+```java
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+
+import kh.com.ipay88.sdk.utils.IPay88Factory;
+
+public class WXPayEntryActivity extends Activity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IPay88Factory.WeChatPay.handleIntent(getIntent(), this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        IPay88Factory.WeChatPay.handleIntent(intent, this);
+    }
+}
+```
+
+- Step3. Add below XML to your `AndroidManifest.xml`, and set the value of Wechat Pay AppId which you received from IPay88 Team.
+```xml
+<manifest>
+    <application>
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="true"
+            android:taskAffinity = "${applicationId}"
+            android:launchMode="singleTask">
+        </activity>
+        
+        <meta-data
+            android:name="kh.com.ipay88.sdk.WxPayAppId"
+            android:value="wxxxxxxxxxxxxxxxxx" />
+    </application>
+</manifest>
+```

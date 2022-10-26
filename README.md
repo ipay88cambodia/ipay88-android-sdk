@@ -92,7 +92,7 @@ public class kh.com.ipay88.sdk.models.IPay88PayRequest
 ##### 3.1.2 Payment Request Methods
 Method Name                         |  Required         |   Description
 -------------                       | :---------------: | -------------
-setEnvironment(Environment value)   |                   |   Swtich between SANDBOX (default) & PRODUCION environment. Please refer to [3.1.3 Environment](#313-environment)
+setEnvironment(Environment value)   |                   |   Swtich between SANDBOX (default) & PRODUCTION environment. Please refer to [3.1.3 Environment](#313-environment)
 setMerchantCode(String value)       |   &#10003;        |   Merchant Code that provided by IPay88, E.g. KH00001
 setMerchantKey(String value)        |   &#10003;        |   Merchant Key that provided by IPay88.
 setPaymentId(int value)             |   &#10003;        |   PaymentId is the value to request payment method to appear on IPay88 landing page. Please refer to [Appendix I (1. PaymentId)](#1-paymentid)
@@ -132,7 +132,7 @@ public class kh.com.ipay88.sdk.models.IPay88PayResponse
 Method Name                         |  Required         |   Description
 -------------                       | :---------------: | -------------
 String getMerchantCode()            |   &#10003;        |   Merchant Code provided by iPay88 and use to uniquely identify the Merchant. E.g. KH00001
-int getPaymentID()                  |   &#10003;        |   Please refer to [Appendix I (1. PaymentId)](#1-paymentid) for possible PaymentId value return to BackendPostURL.
+int getPaymentId()                  |   &#10003;        |   Please refer to [Appendix I (1. PaymentId)](#1-paymentid) for possible PaymentId value return to BackendPostURL.
 String getRefNo()                   |   &#10003;        |   The request Reference number for merchant reference purposes, should be unique for each transaction.
 double getAmount()                  |   &#10003;        |   Payment amount with two decimals
 String getCurrency()                |   &#10003;        |   Currency code that based on standard ISO (KHR or USD)

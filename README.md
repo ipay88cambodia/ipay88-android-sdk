@@ -1,23 +1,23 @@
 # IPay88 (Cambodia) Plc.
 We accept online payments from various methods, such as:
-* Credit or Debit cards (Visa, Mastercards, JCB, Diners Club & UnionPay, etc.)
+* Credit or Debit cards (Visa, Mastercard, JCB, Diners Club & UnionPay, etc.)
 * e-Wallets (KHQR, Wing, PiPay, eMoney, Alipay, WeChat Pay, etc.)
-* Online Banking (ACLEDA XPay, CAMPU Direct Debit, Chip Mong Pay, AMK Online Card, Prince Bank QR, etc.)
+* Online Banking (ACLEDA XPay, CAMPU Direct Debit, Chip Mong Pay, AMK Online Card, etc.)
 * [Appendix I (1. PaymentId)](#1-paymentid)
-* Download Demo App from [here](/app)
+* Download the Demo App from [here](/app)
 
 ## IPay88 SDK for Android
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/kh.com.ipay88.sdk/ipay88-android-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/kh.com.ipay88.sdk/ipay88-android-sdk)
 
 ### SDK Payment Flow
 1. Your application initializes the library.
-2. After buyers complete their payments, the library returns a callback to your application with the status of the payment and the transaction id.
+2. After buyers complete their payments, the library returns a callback to your application with the status of the payment and the transaction ID.
 3. After the library flow is complete, an activity result will be posted to be received by your application.
 
 
 ## Table of Contents
 ### 1. Requirements
-1. Please share your App Information to IPay88 team or submit this form [Mobile App Information](https://forms.gle/HZNb8JokStT3HFRe7):
+1. Please share your App Information with the IPay88 team or submit this form [Mobile App Information](https://forms.gle/HZNb8JokStT3HFRe7):
 - AppId/Package Name (E.g: `kh.com.ipay88.sdk.demo`) inside module `build.gradle` or `AndroidManifest.xml`
 ```gradle
 android {
@@ -28,8 +28,8 @@ android {
 ```
 - App Name (Optional)
     - For showing on the return button on some banks app. Eg: `RETURN TO LEGEND CINEMA`
-2. Then IPay88 team will setup your AppId into IPay88 system to allow you to use IPay88 Mobile Payment channel. 
-3. And then IPay88 team will share you these credentials:
+2. Then IPay88 team will set up your AppId in the IPay88 system to allow you to use the IPay88 Mobile Payment channel. 
+3. And then IPay88 team will share these credentials:
     + Merchant Code (KHxxxxxx)
     + Merchant Key  (XXxxxxxx)
     + ClientAppSecret (IPAY88-xxxxxxxxxxxxxxxxxxxxxxxxx). Please refer to [2.2 ClientAppSecret inside AndroidManifest.xml](#22-clientappsecret-inside-androidmanifestxml)
@@ -37,8 +37,12 @@ android {
 
 ### 2. Setup
 #### 2.1 Dependencies
+##### What's the `-SNAPSHOT` version?
+- It's working fine with the Partner Bank's UAT Environment which has an invalid SSL Certificate.
+- Do not use the `-SNAPSHOT` version for your Production App.
+
 ##### Step 1. Add the Nexus repository (for `-SNAPSHOT` version only)
-+ Add it in your settings.gradle at the end of repositories:
++ Add it in your `settings.gradle` at the end of repositories:
 ```gradle
 dependencyResolutionManagement {
     repositories {
@@ -50,10 +54,10 @@ dependencyResolutionManagement {
 }
 ```
 ##### Step 2. Add the IPay88 Payment SDK dependency
-+ Add it in your module build.gradle inside dependencies:
++ Add it to your module `build.gradle` inside dependencies:
 ```gradle
 dependencies {
-    implementation 'kh.com.ipay88.sdk:ipay88-android-sdk:1.0.1-SNAPSHOT'
+    implementation 'kh.com.ipay88.sdk:ipay88-android-sdk:2.0.0-SNAPSHOT'
 }
 ```
 
@@ -137,7 +141,7 @@ String getRefNo()                   |   &#10003;        |   The request Referenc
 double getAmount()                  |   &#10003;        |   Payment amount with two decimals
 String getCurrency()                |   &#10003;        |   Currency code that based on standard ISO (KHR or USD)
 String getRemark()                  |                   |   Remark for particular transaction.
-String getTransID()                 |   &#10003;        |   iPay88 Transaction ID. E.g. T019988877700
+String getTransId()                 |   &#10003;        |   iPay88 Transaction ID. E.g. T019988877700
 String getAuthCode()                |                   |   Bank reference number. Note: Sometime bank may not return reference number to gateway.
 int getStatus()                     |   &#10003;        |   Use to indicate payment status “1” – Success OR “0” – Fail
 String getErrDesc()                 |                   |   Payment status description. Please refer to [Appendix I (3. Error Description)](#3-error-description)
@@ -235,10 +239,10 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
 
 
 ### 5. Signature Response
-+ If the Merchant request is successful the response message will contain as SHA1 hashed signature. 
++ If the Merchant request is successful the response message will contain SHA1 hashed signature. 
 + The hash signature for the response is a hash of the following fields:
     ```
-    1. MerchantKey (Provided by iPay88 and share between iPay88 and merchant only)
+    1. MerchantKey (Provided by IPay88 and share between IPay88 and merchant only)
     2. MerchantCode
     3. PaymentId
     4. RefNo
@@ -262,7 +266,7 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
     ```
     Apple88KEYKH00001ORD1188100KHR1
     ```
-    - The resulting has signature value equals to (using SHA1 algorithm)
+    - The resulting has a signature value equal to (using the SHA1 algorithm)
     ```
     KiCecyU86ZOFk15jXwOAvHdw/1M=
     ```
@@ -270,22 +274,22 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
 
 
 ### 6. Backend Post Feature
-The Backend POST feature is server to server technology. It does not depend on the `IPay88Sdk's Payment Screen` to return payment response data to `Merchant App`. With this feature implemented, your system still can get the payment status on the backend (asynchronously) even if the `IPay88Sdk's Payment Screen` fails to get status from IPay88 System which may be due to a closed `IPay88Sdk's Payment Screen`, internet connection timeout and etc.
+The Backend POST feature is server-to-server technology. It does not depend on the `IPay88Sdk's Payment Screen` to return payment response data to the `Merchant App`. With this feature implemented, your system still can get the payment status on the backend (asynchronously) even if the `IPay88Sdk's Payment Screen` fails to get status from IPay88 System which may be due to a closed `IPay88Sdk's Payment Screen`, internet connection timeout and etc.
 
 #### 1. Prerequisite
 - This Backend post feature will ONLY return status if the transaction is a payment `success`. No status will return if the payment is `failed`.
-- The Backend page should implement checking on some fields such as `Signature` (Please refer to [5. Signature Response](#5-signature-response)) and `Amount` to prevent user hijack merchant system.
-- The backend page should not have session related code so that merchant systems are still able accept payment status from IPay88 System even if the user is logged out or the session is expired.
-- You need to implement a check to determine "backend page" to update the order so it won't update order status in merchant system more than 1 time.
+- The Backend page should implement checking on some fields such as `Signature` (Please refer to [5. Signature Response](#5-signature-response)) and `Amount` to prevent users hijack the merchant system.
+- The backend page should not have session-related code so that merchant systems are still able to accept payment status from the IPay88 System even if the user is logged out or the session is expired.
+- You need to implement a check to determine the "backend page" to update the order so it won't update order status in the merchant system more than 1 time.
 - After receiving the payment success status, IPay88 OPSG will simultaneously return payment status to the SDK's Callback and "backend page".
 
 #### 2. Implementation
-On the merchant website, create a page to accept backend post response parameters from IPay88 System.
+On the merchant website, create a page to accept backend post response parameters from the IPay88 System.
 
-The Backend Post response parameters are same like [3.2.2 Payment Response Methods](#322-payment-response-methods) but just remove the `get` prefix and bracket `()` postfix (Eg. `getMerchantCode()` -> `MerchantCode`).
+The Backend Post response parameters are the same as [3.2.2 Payment Response Methods](#322-payment-response-methods) but just remove the `get` prefix and bracket `()` postfix (Eg. `getMerchantCode()` -> `MerchantCode`).
 
-- Step1. Specify your "backend page" in [3.1.2 Payment Request Methods](#312-payment-request-methods) on field named `backendURL`.
-- Step2. On your "backend page" you have to write out the word `RECEIVEOK` as an acknowledgement when you get the payment success status from IPay88 System. And IPay88 System will re-try send the payment status to the "backend page" up to 3 times on different interval if no `RECEIVEOK` acknowledgement detected.
+- Step1. Specify your "backend page" in [3.1.2 Payment Request Methods](#312-payment-request-methods) on a field named `backendURL`.
+- Step2. On your "backend page", you have to write out the word `RECEIVEOK` as an acknowledgment when you get the payment success status from the IPay88 System. And IPay88 System will re-try send the payment status to the "backend page" up to 3 times on different intervals if no `RECEIVEOK` acknowledgement is detected.
 
   Note:
   > Make sure just the word `RECEIVEOK` only on your "backend page" without any HTML tag on the page.
@@ -346,31 +350,29 @@ PHP
 ### Appendix I
 #### 1. PaymentId
 + Set PaymentId = 0, it will show all registered payment methods to the customer.
-
 ##### 1.1 Credit & Debit Card
 Payment Method Name |  PaymentId (USD)| Logo
 -------------       | :-------------: | :-------------:
-Credit Card         |   1             |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/CC.svg" />
-UnionPay            |   15            |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/MPGS_UPI.svg" />
+Credit Card         |   1             |   <img width="35" src="https://epay.ipay88.com.kh/prevapi/assets/icon/CAMPUCARD.svg" />
+UnionPay            |   15            |   <img width="35" src="https://epay.ipay88.com.kh/prevapi/assets/icon/MPGS_UPI.svg" />
 
 ##### 1.2 eWallet
 Payment Method Name |  PaymentId (USD)|  PaymentId (KHR)| Logo
 -------------       | :-------------: | :-------------: | :-------------:
-eMoney              |   9             |     10          |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/EW_EMONEY.svg" />
-Pi Pay              |   11            |                 |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/EW_PIPAY.svg" />
-Alipay              |   233           |                 |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/QR_ALIPAY.svg" />
-Wing                |   235           |     236         |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/EW_ONLINEEWING.svg" />
-WeChat Pay          |   240           |                 |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/QR_WECHAT.svg" />
-KHQR                |   248           |     249         |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/QR_KHQR.svg" />
+eMoney              |   9             |     10          |   <img width="35" src="https://epay.ipay88.com.kh/prevapi/assets/icon/EW_EMONEY.svg" />
+Pi Pay              |   11            |                 |   <img width="35" src="https://epay.ipay88.com.kh/prevapi/assets/icon/QR_PIPAY.svg" />
+Alipay              |   233           |                 |   <img width="35" src="https://epay.ipay88.com.kh/prevapi/assets/icon/alipay.svg" />
+Wing                |   235           |     236         |   <img width="35" src="https://epay.ipay88.com.kh/prevapi/assets/icon/EW_WING.svg" />
+WeChat Pay          |   240           |                 |   <img width="35" src="https://epay.ipay88.com.kh/prevapi/assets/icon/QR_WECHAT.svg" />
+KHQR                |   248           |     249         |   <img width="35" src="https://epay.ipay88.com.kh/prevapi/assets/icon/QR_KHQR.svg" />
 
 ##### 1.3 Online Banking
 Payment Method Name |  PaymentId (USD)|  PaymentId (KHR)| Logo
 -------------       | :-------------: | :-------------: | :-------------:
-Acleda XPAY         |   3             |     4           |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/OB_ACLEDAXPAY.svg" />
-Chip Mong Pay       |   238           |     239         |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/OB_CHIPMONG.svg" />
-Campu Direct Debit  |   242           |     243         |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/OB_CAMPUDIRECTDEBIT.svg" />
-AMK Online Card     |   246           |     247         |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/OB_AMKCARD.svg" />
-Prince Bank QR      |   251           |     252         |   <img width="35" src="https://payment.ipay88.com.kh/PG/assets/images/bank/QR_PRINCE_BANK.svg" />
+Acleda XPAY         |   3             |     4           |   <img width="35" src="https://epay.ipay88.com.kh/prevapi/assets/icon/ACLEDAXPAYLOGO.svg" />
+Chip Mong Pay       |   238           |     239         |   <img width="35" src="https://epay.ipay88.com.kh/prevapi/assets/icon/OB_CHIPMONG.svg" />
+Campu Direct Debit  |   242           |     243         |   <img width="35" src="https://epay.ipay88.com.kh/prevapi/assets/icon/OB_CAMPUDIRECTDEBIT.svg" />
+AMK Online Card     |   246           |     247         |   <img width="35" src="https://epay.ipay88.com.kh/prevapi/assets/icon/OB_AMKCARD.svg" />
 
 #### 2. Currency
 Currency Code   |  Description
@@ -383,18 +385,18 @@ Message                     |  Description
 -------------               | -------------
 Duplicate reference number  |   Reference number must be unique for each transaction.
 Invalid merchant            |   The merchant code does not exist.
-Invalid parameters          |   Some parameter posted to iPay88 is invalid or empty.
+Invalid parameters          |   Some parameter posted to IPay88 is invalid or empty.
 Overlimit per transaction   |   You exceed the amount value per transaction.
-Payment not allowed         |   The Payment method you requested is not allowed for this merchant code, please contact iPay88 Support to verify what payment method available for the merchant account.
-Permission not allow        |   Your AppId or the shared credentials is not match with the information registered in iPay88 merchant account. Please contact IPay88 team.
+Payment not allowed         |   The Payment method you requested is not allowed for this merchant code, please contact IPay88 Support to verify what payment method available for the merchant account.
+Permission not allow        |   Your AppId or the shared credentials is not match with the information registered in IPay88 merchant account. Please contact IPay88 team.
 
 
 ### SDK Version Updates
 #### Version >= 1.0.1
 ##### 1. WeChat In-App Payment Configuration
-- Step1. Create a class named `WXPayEntryActivity` which extends `android.app.Activity` and place it under a package named `wxapi`, then put it under your App's package name (E.g: `kh.com.ipay88.sdk.demo.wxapi`).
+- Step1. Create a class named `WXPayEntryActivity` which extends `android.app.Activity` and place it under a package named `wxapi`, then put it under your App's package name (e.g.: `kh.com.ipay88.sdk.demo.wxapi`).
 
-- Step2. Add below source codes to your class named `WXPayEntryActivity`
+- Step2. Add source codes below  to your class named `WXPayEntryActivity`
 ```java
 import android.app.Activity;
 import android.content.Intent;
@@ -419,7 +421,7 @@ public class WXPayEntryActivity extends Activity {
 }
 ```
 
-- Step3. Add below XML to your `AndroidManifest.xml`, and set the value of Wechat Pay AppId which you received from IPay88 Team.
+- Step3. Add the below XML to your `AndroidManifest.xml`, and set the value of WeChat Pay AppId which you received from the IPay88 Team.
 ```xml
 <manifest>
     <application>

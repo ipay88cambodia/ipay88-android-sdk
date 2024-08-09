@@ -57,7 +57,7 @@ dependencyResolutionManagement {
 + Add it to your module `build.gradle` inside dependencies:
 ```gradle
 dependencies {
-    implementation 'kh.com.ipay88.sdk:ipay88-android-sdk:2.0.0-SNAPSHOT'
+    implementation 'kh.com.ipay88.sdk:ipay88-android-sdk:2.0.1-SNAPSHOT'
 }
 ```
 
